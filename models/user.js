@@ -1,26 +1,20 @@
-const { chalk } = require('../exports/module');
-const { sequelize, DataTypes } = require('../config/db');
+'use strict';
 
+const { DataTypes } = require("sequelize");
 
 module.exports = (connection) => {
-    const user = connection?.define('User', {
-        // Model attributes are defined here
-        id: {
-            type: DataTypes.INTEGER,
+    return connection.define('users', {
+        _id: {
+            type: DataTypes.BIGINT,
             autoIncrement: true,
             primaryKey: true,
         },
-        fullname: {
+        name: {
             type: DataTypes.STRING,
             allowNull: true,
         },
         email: {
-            type: DataTypes.STRING,
-            unique: true,
-            allowNull: true,
-        },
-        dob: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             unique: true,
             allowNull: true,
         },
@@ -33,8 +27,23 @@ module.exports = (connection) => {
             allowNull: false,
             defaultValue: "user",
         },
-        personal_access_token: {
+        location: {
             type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+        },
+        dob: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+        },
+        age: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+        },
+        personal_access_token: {
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         phone_no: {
@@ -44,27 +53,39 @@ module.exports = (connection) => {
         remember_token: {
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: btoa(String.fromCharCode(...new Uint8Array(Array(30).fill().map(() => Math.round(Math.random() * 30)))))
+        },
+        device_type: {
+            type: DataTypes.ENUM,
+            values: ["i", "a"],
+            defaultValue: null,
+            allowNull: true,
+        },
+        device_token: {
+            type: DataTypes.TEXT,
+            allowNull: true,
         },
         is_email_verified: {
             type: DataTypes.ENUM,
             values: ["1", "0"],
             defaultValue: "0",
         },
-        auth_token: {
-            type: DataTypes.TEXT,
-            allowNull: true,
+        created_at: {
+            type: DataTypes.DATE,
+            defaultValue: new Date(),
         },
-
+        updated_at: {
+            type: DataTypes.DATE,
+            defaultValue: new Date(),
+        },
     }, {
         tableName: "users",
-        timestamps: true
-    }).sync({
-        alter: true,
-        // force: true,
-    }).then(() => {
-        console.log(chalk.yellow.bold('User table is synchronized successfully !'));
+        timestamps: false,
+        // defaultScope: {
+        //     attributes: { exclude: ['password'] },
+        //   }
     });
-    console.log(chalk.yellow.bold("Syncing user model :", connection.models.User));
-    return user;
+
 
 }
+

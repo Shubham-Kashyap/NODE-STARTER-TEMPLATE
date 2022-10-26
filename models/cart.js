@@ -1,14 +1,14 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
 
     const Product = sequelize.define('Product', {
-        id: {
+        _id: {
             type: DataTypes.BIGINT,
             primaryKey: true,
             autoIncrement: true,
         },
-        category: {
+        product_id: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
             defaultValue: new Date(),
         },
     }, {
-        tableName: "products",
+        tableName: "users",
     })
     return Product;
 }

@@ -1,7 +1,7 @@
 const chalk = require('chalk');
+const { model } = require('mongoose');
 const { Sequelize, DataTypes } = require('sequelize'); //  required
-
-const { env } = require('../exports/module');
+const env = require('dotenv').config();
 
 
 const sequelize = new Sequelize(
@@ -14,22 +14,28 @@ const sequelize = new Sequelize(
     }
 );
 
-let models = {};
 const connectWithDatabase = async () => {
     await sequelize.authenticate();
-    models = {
-        product: require('../models/product'),
-    }
+    await sequelize.sync({
+        alter: true,
+        // force: true,
+    })
     console.log(chalk.yellow.bold('Connection with DB has been established successfully.'));
 };
-// const models = {
-//     user: require('../models/product'),
-//     product: require('../models/product'),
-// }
 
+
+const models = {
+    User: require('../models/user')(sequelize),
+    Cart: require('../models/cart')(sequelize),
+    Product: require('../models/product')(sequelize),
+}
 
 exports.sequelize = sequelize;
 exports.Sequelize = Sequelize;
 exports.DataTypes = DataTypes;
 exports.models = models;
 exports.connectWithDatabase = connectWithDatabase;
+
+exports.User = models.User;
+exports.Cart = models.Cart;
+exports.Product = models.Product;

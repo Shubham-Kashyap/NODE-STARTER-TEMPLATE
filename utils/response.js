@@ -1,7 +1,7 @@
 
 
 class Response {
-    errorResponse = (res, message, data = []) => {
+    errorResponse = (res, message, data = null) => {
         return res.send({
             status: true,
             force_logout: '0',
@@ -9,7 +9,7 @@ class Response {
             response: data
         });
     }
-    successResponse = (res, message, data = []) => {
+    successResponse = (res, message, data = null) => {
         return res.send({
             status: true,
             force_logout: '0',
@@ -17,7 +17,7 @@ class Response {
             response: data
         });
     }
-    forceLogoutResponse = (res, message, data = []) => {
+    forceLogoutResponse = (res, message, data = null) => {
         return res.send({
             status: true,
             force_logout: '1',
