@@ -1,10 +1,10 @@
 # NODE STARTER TEMPLATE
 NODE-STARTER-TEMPLATE is backend application setup built on node js express framework. 
-Hi, my name is **shubham kashyap** , I have created this project to setup and create the backend of MERN application in Node js along with reusable files and folder structure.But later on i thought it would be great if it works with react js so added react js. 
+Hi, my name is **shubham kashyap** , I have created this project to setup and create the backend of MERN application. This application will help other developers to setup backend part of any applciation faster in MVC environment.
 
 `Important Info : `
 - MAIL_FROM and MAIL_USER should be the same for successfull mail delivery `confirms the authenticated email address is the one that application users recieves email from`.
-- 
+- I have use express validator for validation purpose and facing a few problems with it. All rules are working fine but you are free to use any other validator packages whichever you may like 
 
 # prerequisites
 
