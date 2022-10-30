@@ -4,5 +4,4 @@ module.exports = {
     apiRoutes: require('../routes/api'),
     webRoutes: require('../routes/web'),
     env: require('dotenv').config()
-
 }

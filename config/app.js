@@ -12,7 +12,6 @@ class Server {
         this._listen();
         this._displayIncommingRequest();
         this._setupRoutes();
-        this._setupRoutes();
         this._connectWithDatabase();
 
     }
@@ -20,7 +19,7 @@ class Server {
     _listen = () => {
         // console.log("port", this.port);
         this.app.listen(this.port, () => {
-            console.log(chalk.yellow.bold('Server is running on port :'), chalk.cyan.bold(this.port))
+            console.log(chalk.yellow.bold('Server is running on port :'), chalk.cyan.bold(this.port));
         });
     }
 

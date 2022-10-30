@@ -19,8 +19,8 @@ const validateRules = (method) => {
     // console.log(method)
     switch (method) {
         case 'signup': {
-            console.log('signup case hit')
-            const rules = [
+            console.log("======== signup ==========")
+           return [
                 check('fullname')
                     .notEmpty().withMessage('fullname field is required').bail(),
                 check('email')
@@ -45,11 +45,12 @@ const validateRules = (method) => {
                     .notEmpty().withMessage('Password field is required').bail()
                     .exists().withMessage("Password should not be empty").bail(),
             ];
-            console.log("===== Signup =======")
+           
             return rules;
         }
         case 'login': {
-            const rules = [
+            console.log("===== login ======")
+           return [
                 check('email')
                     .notEmpty().withMessage('Email field is required').bail()
                     .exists().withMessage("Emial should not be empty").bail()
@@ -70,10 +71,16 @@ const validateRules = (method) => {
                     }
                 }),
             ]
-            console.log("===== login ======")
+            
             return rules;
         }
+        case 'fetch-profile' : {
+            console.log("============ fetch profile ===============")
+            return [    
+            ]
+        }
         default: {
+            console.log("===== default rule ======");
             return [];
         }
     }
@@ -86,5 +93,5 @@ module.exports = {
     validateRequest: (method) => [
         validateRules(method),
         validateResult
-    ]
+    ],
 }

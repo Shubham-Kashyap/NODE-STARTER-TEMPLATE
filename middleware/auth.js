@@ -5,19 +5,15 @@ const { errorResponse } = require('../utils/response');
 const authenticateToken = async (req, res, next) => {
     try {
         const token = req.headers["authorization"];
-        // console.log(req.headers.authorization);
-        // console.log(token.split(' ').pop())
         switch (token) {
             case undefined: {
-                // return errorResponse(res, "Unauthorized access")
-                throw Error("Unauthorized access ");
+                throw new Error("Unauthorized access ");
             }
             default: {
-                console.log(token)
-
+                console.log(token);
                 var decoded = await verifyToken(token?.split(' ').pop());
+                console.log("decoded == ",decoded)
                 req.user = await User.findOne({ where: { _id: decoded.id } });
-
             }
         }
         next();

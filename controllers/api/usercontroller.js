@@ -2,6 +2,7 @@ const { models, User } = require("../../config/db");
 const { encryptHash, compareHash } = require("../../services/crypto");
 const { generateToken } = require("../../services/jwt");
 const { successResponse, errorResponse } = require("../../utils/response");
+const {sendMail} = require('../../services/mail');
 let _request = {};
 class UserController {
 
@@ -23,8 +24,9 @@ class UserController {
             data.personal_access_token = personalAccessToken;
             console.log(`${req.protocol}://${req.get('host')}`)
             const emailData = {
+                email : data?.email,
                 name: data?.name,
-                link: `${req.protocol}://${req.get('host')}/verify/${personalAccessToken}`
+                link: `${req.protocol}://${req.get('host')}/api/v1/verify/${personalAccessToken}`
             };
             // sendMail(data?.email,emailData );
             return successResponse(res, "signup successfull !", data);
@@ -40,7 +42,7 @@ class UserController {
     login = async (req, res) => {
         try {
             _request = req.body;
-            var user = await User.findOne({ where: { email: req.body.email } });
+            const user = await User.findOne({ where: { email: req.body.email } });
             const personalAccessToken = await generateToken(user?._id, '24h');
             user.personal_access_token = personalAccessToken;
             if (!user) {
@@ -59,8 +61,7 @@ class UserController {
      */
     fetchProfile = async (req, res) => {
         try {
-            const user = req.user
-            return successResponse(res, "profile fetched successfully", user);
+            return successResponse(res, "profile fetched successfully", req?.user);
 
         } catch (error) {
             return errorResponse(res, error.message)
