@@ -18,9 +18,15 @@ const validateResult = (req, res, next) => {
 const validateRules = (method) => {
     // console.log(method)
     switch (method) {
+
+        /**
+         * -------------------------------------------------------------------------------
+         * Signup validation rules
+         * -------------------------------------------------------------------------------
+         */
         case 'signup': {
             console.log("======== signup ==========")
-           return [
+            return [
                 check('fullname')
                     .notEmpty().withMessage('fullname field is required').bail(),
                 check('email')
@@ -45,12 +51,19 @@ const validateRules = (method) => {
                     .notEmpty().withMessage('Password field is required').bail()
                     .exists().withMessage("Password should not be empty").bail(),
             ];
-           
+
             return rules;
         }
+
+
+        /**
+         * -------------------------------------------------------------------------------------
+         * Login validation rules
+         * -------------------------------------------------------------------------------------
+         */
         case 'login': {
             console.log("===== login ======")
-           return [
+            return [
                 check('email')
                     .notEmpty().withMessage('Email field is required').bail()
                     .exists().withMessage("Emial should not be empty").bail()
@@ -71,14 +84,25 @@ const validateRules = (method) => {
                     }
                 }),
             ]
-            
+
             return rules;
         }
-        case 'fetch-profile' : {
+
+        /**
+         *  -------------------------------------------------------------------------------------
+         * Fetch profile validation rules 
+         *  -------------------------------------------------------------------------------------
+         */
+        case 'fetch-profile': {
             console.log("============ fetch profile ===============")
-            return [    
+            return [
             ]
         }
+        /**
+         * -------------------------------------------------------------------------------------
+         * Default validation rule
+         * -------------------------------------------------------------------------------------
+         */
         default: {
             console.log("===== default rule ======");
             return [];
